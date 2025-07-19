@@ -26,6 +26,13 @@ export default function RootLayout({ children }) {
           href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap"
           rel="stylesheet"
         />
+
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+        />
+
+
       </head>
       <body>{children}</body>
     </html>
