@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 
 export default function Home() {
   const [bgColor, setBgColor] = useState('#000');
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true); // Start as playing
   const iframeRef = useRef(null);
 
   useEffect(() => {
@@ -15,13 +15,29 @@ export default function Home() {
       setBgColor(colors[index]);
     }, 3000);
 
-    return () => clearInterval(interval);
+    // Play music automatically on mount (if allowed by browser)
+    const tryPlay = () => {
+      const widget = iframeRef.current?.contentWindow;
+      if (widget) {
+        widget.postMessage(
+          JSON.stringify({ method: 'play' }),
+          'https://w.soundcloud.com'
+        );
+      }
+    };
+
+    // Wait briefly to make sure iframe is ready
+    const playTimeout = setTimeout(tryPlay, 1000);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(playTimeout);
+    };
   }, []);
 
   const togglePlayback = () => {
-    if (!iframeRef.current) return;
-
-    const widget = iframeRef.current.contentWindow;
+    const widget = iframeRef.current?.contentWindow;
+    if (!widget) return;
 
     if (isPlaying) {
       widget.postMessage(
@@ -89,7 +105,7 @@ export default function Home() {
         width="0"
         height="0"
         allow="autoplay"
-        src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/luminemusicofficial/disclosure-you-me-lumine-remix&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false"
+        src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/luminemusicofficial/disclosure-you-me-lumine-remix&auto_play=true&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false"
       ></iframe>
     </div>
   );
