@@ -18,7 +18,6 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
-  // Communicate with SoundCloud player via postMessage
   const togglePlayback = () => {
     if (!iframeRef.current) return;
 
@@ -43,6 +42,10 @@ export default function Home() {
     <div
       style={{
         height: '100vh',
+        width: '100vw',
+        overflow: 'hidden',
+        margin: 0,
+        padding: 0,
         backgroundColor: bgColor,
         display: 'flex',
         flexDirection: 'column',
@@ -55,11 +58,11 @@ export default function Home() {
       <h1
         style={{
           fontFamily: '"Shadows Into Light", cursive',
-          fontSize: 'clamp(2rem, 10vw, 5rem)',
+          fontSize: 'clamp(2rem, 8vw, 4rem)',
           fontWeight: 'bold',
           color: '#fff',
           textShadow: '0 0 10px rgba(0,0,0,0.9)',
-          marginBottom: '2rem',
+          margin: 0,
         }}
       >
         runitback?
@@ -69,9 +72,10 @@ export default function Home() {
         onClick={togglePlayback}
         className="material-symbols-outlined"
         style={{
-          fontSize: '64px',
+          fontSize: 'clamp(3rem, 12vw, 5rem)',
           color: '#fff',
           cursor: 'pointer',
+          marginTop: '1rem',
           userSelect: 'none',
         }}
       >
@@ -79,14 +83,14 @@ export default function Home() {
       </span>
 
       <iframe
-      ref={iframeRef}
-      title="SoundCloud player"
-      style={{ display: 'none' }}
-      width="0"
-      height="0"
-      allow="autoplay"
-      src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/luminemusicofficial/disclosure-you-me-lumine-remix&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false"
-    />
+        ref={iframeRef}
+        title="SoundCloud player"
+        style={{ display: 'none' }}
+        width="0"
+        height="0"
+        allow="autoplay"
+        src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/luminemusicofficial/disclosure-you-me-lumine-remix&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false"
+      ></iframe>
     </div>
   );
 }
